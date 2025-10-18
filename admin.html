@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Hamada TV Live</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-tv"></i>
+                <span>Hamada TV Live</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="channels.html" class="nav-link">Channels</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="admin.html" class="nav-link admin-link active">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="admin-login" id="adminLogin">
+        <div class="container">
+            <div class="login-form-container">
+                <form class="login-form" id="loginForm">
+                    <h2><i class="fas fa-lock"></i> Admin Login</h2>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel -->
+    <section class="admin-panel" id="adminPanel" style="display: none;">
+        <div class="container">
+            <div class="admin-header">
+                <h1><i class="fas fa-cogs"></i> Admin Panel</h1>
+                <button class="btn btn-secondary" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="matches">
+                    <i class="fas fa-futbol"></i> Matches
+                </button>
+                <button class="tab-btn" data-tab="channels">
+                    <i class="fas fa-tv"></i> Channels
+                </button>
+                <button class="tab-btn" data-tab="ads">
+                    <i class="fas fa-ad"></i> Ads
+                </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+            </div>
+
+            <!-- Matches Tab -->
+            <div class="tab-content active" id="matchesTab">
+                <div class="tab-header">
+                    <h2>Manage Matches</h2>
+                    <button class="btn btn-primary" id="addMatchBtn">
+                        <i class="fas fa-plus"></i> Add Match
+                    </button>
+                </div>
+                <div class="matches-list" id="matchesList">
+                    <!-- Matches will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Channels Tab -->
+            <div class="tab-content" id="channelsTab">
+                <div class="tab-header">
+                    <h2>Manage Channels</h2>
+                    <button class="btn btn-primary" id="addChannelBtn">
+                        <i class="fas fa-plus"></i> Add Channel
+                    </button>
+                </div>
+                <div class="channels-list" id="channelsList">
+                    <!-- Channels will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Ads Tab -->
+            <div class="tab-content" id="adsTab">
+                <div class="tab-header">
+                    <h2>Manage Top Ads</h2>
+                </div>
+                <div class="ads-editor">
+                    <div class="form-group">
+                        <label for="adsContent">Ads HTML Content</label>
+                        <textarea id="adsContent" rows="10" placeholder="Enter your ads HTML content here..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" id="saveAdsBtn">
+                        <i class="fas fa-save"></i> Save Ads
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settingsTab">
+                <div class="tab-header">
+                    <h2>Settings</h2>
+                </div>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label for="newPassword">Change Admin Password</label>
+                        <input type="password" id="newPassword" placeholder="Enter new password">
+                    </div>
+                    <button class="btn btn-primary" id="changePasswordBtn">
+                        <i class="fas fa-key"></i> Change Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Match Modal -->
+    <div class="modal" id="matchModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeMatchModal">&times;</span>
+            <form class="match-form" id="matchForm">
+                <h3 id="matchModalTitle">Add Match</h3>
+                <input type="hidden" id="matchId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="homeTeam">Home Team</label>
+                        <input type="text" id="homeTeam" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="awayTeam">Away Team</label>
+                        <input type="text" id="awayTeam" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="homeLogo">Home Team Logo URL</label>
+                        <input type="url" id="homeLogo">
+                    </div>
+                    <div class="form-group">
+                        <label for="awayLogo">Away Team Logo URL</label>
+                        <input type="url" id="awayLogo">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="streamUrl">Stream URL (M3U8)</label>
+                    <input type="url" id="streamUrl" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchStatus">Status</label>
+                    <select id="matchStatus" required>
+                        <option value="LIVE">LIVE</option>
+                        <option value="UPCOMING">UPCOMING</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Match
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Channel Modal -->
+    <div class="modal" id="channelModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeChannelModal">&times;</span>
+            <form class="channel-form" id="channelForm">
+                <h3 id="channelModalTitle">Add Channel</h3>
+                <input type="hidden" id="channelId">
+                
+                <div class="form-group">
+                    <label for="channelName">Channel Name</label>
+                    <input type="text" id="channelName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="channelLogo">Channel Logo URL</label>
+                    <input type="url" id="channelLogo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="channelUrl">Channel Stream URL</label>
+                    <input type="url" id="channelUrl" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Channel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-tv"></i> Hamada TV Live</h3>
+                    <p>Your ultimate destination for live sports streaming and TV channels.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="channels.html">Channels</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hamada TV Live. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
